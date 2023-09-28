@@ -35,8 +35,9 @@ library(DT)
 library(stringr)
 
 unique_no_na <- function(x) unique(x[!is.na(x)])
-MPD_version_num = "0.10"
+MPD_version_num = "0.11"
 MPD_version_name = "Primary Artemis"
+MPD_db_date = "24 August 2023"
 
 options(shiny.trace = F)
 
@@ -48,15 +49,17 @@ options(shiny.trace = F)
 ##################################################################################################################################################
 
 # Define UI
-ui <- navbarPage(title = "MPD Tool", 
+ui <- navbarPage(title = paste("MPD Tool version: ", MPD_version_num, "-",MPD_version_name), 
                  id =  "MPDTool",
                  header = list(),
-                 
-  tabPanel("Start Here", 
+
+  tabPanel("Instructions", 
            fluidRow(
              column(width = 12, 
                     # img(src = "https://www.nyftwg.com/wp-content/uploads/2020/04/offshore-windfarm-1.jpg", height = "100%"),
-                    h3(HTML(paste("Mitigation Practices Discovery Tool (MPD Tool): v", MPD_version_num, "-",MPD_version_name)), style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
+                    h2("Mitigation Practices Discovery Tool (MPD Tool)", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
+                    # p(paste("Version: ", MPD_version_num, "-",MPD_version_name), style = "padding-left: 10px; margin-bottom: 10px;"),
+                    h3("Resources", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
                     a("Quick Start Guide", 
                       href = 'MMP Tool Quick Start Guide 3-24-20.pdf',
                       style = "padding-left: 30px; padding-right: 50px; font-weight: 600; font-size: 18px;", 
@@ -72,15 +75,17 @@ ui <- navbarPage(title = "MPD Tool",
                     a("Full Database Download", 
                       href = "Full-MMP-and-Reference-List-8-24-2023.zip",
                       style = "padding-left: 0px; padding-right: 20px; font-weight: 600; font-size: 18px;"),
+                    h3("Background", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
                     h5(HTML(paste("New York State Energy Research and Development Authority (NYSERDA) has developed a", 
                                   "Mitigation Practices Discovery (MPD) Tool that is publicly available  for use",
-                                  "by environmental and fisheries stakeholders. It houses a searchable database of mitigation practices",
-                                  "extracted from agency reports, environmental assessments, scientific literature,",
-                                  "technical guidance documents, and other sources.",
+                                  "by environmental and fisheries stakeholders. It houses a searchable database of",
+                                  "mitigation practices drawing from multiple industries but that may be relevant to",
+                                  "avoiding, minimizing, offsetting and restoring potential effects of offshore wind",
+                                  "energy development on wildlife, the environment, and fisheries.",
                                   "<br>",
                                   "<br>",
+                                  "The tool is searchable by various categories, including but not limited to:",
                                   "<ul>",
-                                  "<li>The tools is searchable by various categories. including but not limited to:</li>",
                                   "<li>Resource Groups - birds/bats, marine mammals/sea turtles, fish, benthos, fisheries</li>",
                                   "<li>Potential effect; and</li>",
                                   "<li>Development phases of offshore wind</li>",
@@ -90,117 +95,254 @@ ui <- navbarPage(title = "MPD Tool",
                                   "that could support further evaluation of how best to incorporate mitigation practices into the state’s plans for offshore wind ",
                                   "energy development. This Tool does not prioritize or judge the value of individual or combined mitigation practices, and it does not consider site-",
                                   "and project-specific conditions that might affect how and whether certain mitigation practices may be practicably implemented. ",
-                                  "It does, however, provide several sorting criteria that may be useful to the E-TWG and F-TWG and other users when ",
-                                  "assessing potential mitigation practices."
-                    )), 
-                    style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; font-weight: bold; white-space: normal;")),
-             ),
-           fluidRow(
-             column(12, 
-                    hr()
-             )),
-           fluidRow(
-             column(width = 2),
-             column(width = 4,
-                    shinyTree("general_mmps_tree", checkbox = TRUE),
-                    bsTooltip("general_mmps_tree",
-                              "Categories or types of specific mitigation practices gathered in the spreadsheets. Generalized mitigation practices needed to be general enough that multiple specific mitigation practices would aggregate into a generalized mitigation practice category. Generalized mitigation practices have also been designed to be mutually exclusive.",
-                              "left",
-                              options = list(container = "body")),
-                    
-                    shinyTree("resources_tree", checkbox = TRUE),
-                    bsTooltip("resources_tree",
-                              "Mitigation practices are focused on minimizing and avoiding potential impacts of offshore wind energy development on the following resources",
-                              "left",
-                              options = list(container = "body")),
-                    
-                    shinyTree("stressors_tree", checkbox = TRUE),
-                    bsTooltip("stressors_tree",
-                              "External stimuli that can cause changes to the behavioral, physical, chemical, and/or biological characteristics of an organism, species, or the ecosystem inhabited by the organism/species.",
-                              "left",
-                              options = list(container = "body")),
-                    
-                    shinyTree("potential_effects_tree", checkbox = TRUE),
-                    bsTooltip("potential_effects_tree",
-                              "The changes to the behavioral, physical, chemical, and/or bio- logical characteristics of an organism, species, or the ecosystem inhabited by the organism/species due to stressors related to offshore wind energy development.",
-                              "left",
-                              options = list(container = "body")),
-                    
-                    shinyTree("dev_phase_tree", checkbox = TRUE),
-                    bsTooltip("dev_phase_tree",
-                              "The stages of offshore wind facility development/operation, each of which encompass a number of activities and, as a result, may have different types of stressors.",
-                              "right",
-                              options = list(container = "body")),
-                    shinyTree("industries_tree", checkbox = TRUE),
-                    bsTooltip("industries_tree",
-                              "The type of industry for which mitigation practices have been suggested or implemented in the U.S. or other countries.",
-                              "right",
-                              options = list(container = "body")),
-                    
-                    shinyTree("implem_status_tree", checkbox = TRUE),
-                    bsTooltip("implem_status_tree",
-                              "The implementation status defines the degree to which the use or efficacy of a mitigation practice has been tested.",
-                              "right",
-                              options = list(container = "body")),
-                    
-                    shinyTree("mitigation_hierarchy_tree", checkbox = TRUE),
-                    bsTooltip("mitigation_hierarchy_tree",
-                              "The most applicable level(s) of the mitigation hierarchy was(were) chosen for each mitigation practice.",
-                              "right",
-                              options = list(container = "body"))   
-                    
-             ),
-             column(width = 6,
-
-                    shinyTree("subgroup_tree", checkbox = TRUE),
-                    bsTooltip("subgroup_tree",
-                              "Resource subgroups.",
-                              "right",
-                              options = list(container = "body")),
-
-          
-                    )
-           ),
-           fluidRow(
-             br(), br(), br(),br(),
+                                  "It does, however, provide several sorting criteria that may be useful to the Environmental Technical Working Group (E-TWG) and Fisheries Technical",
+                                  "Working Group (F-TWG) and other users when assessing potential mitigation practices.")), 
+                    style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; font-weight: bold; white-space: normal;"),
+                    h3("Instructions", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
+                    h5(HTML(paste(
+                      "<ul>",
+                      "<li>Click on the \"Filter Database\" tab in the header.</li>",
+                      "<li>Select the filter categories you want to display - by default all categories are off.</li>",
+                      "<li>Hover over filters for term definitions.</li>",
+                      "<li>To see the full database, you can either click the query button with all filters applied or download the full database at the link above (\"Full Database Download\").</li>",
+                      "<li>Download the filtered data as CSV or Excel file by clicking one of the buttons above the table.</li>",
+                      "<li>References can be displayed for the filtered database selection in the \"Filtered Referenecs\" tab.</li>",
+                      "<li>Download the filtered references as CSV or Excel file by clicking one of the buttons above the table.</li>",
+                      "<li>A glossary of terms is available in the \"Glossary\" tab.</li>",
+                      "</ul>"
+                      )),
+                       style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; font-weight: bold; white-space: normal;")
+                      ),
+             fluidRow(
+               column(12, 
+                      hr()
+               )),
              
-             actionButton(
-               inputId = "filter_btn",
-               "MPD Query",
-               width = "200px",
-               style = "width: 100px; background-color: cornflowerblue; color: white; font-weight: bold;", 
-               class = "btn-filter"
-             ), 
-             style = "display: flex; align-items: center; justify-content: center;"
-           ),
+             fluidRow(
+               p(HTML("This tool was developed by Biodiversity Research Institute with support from NYSERDA. <br> An earlier version of this tool was developed by Environment and Ecology Inc. and Biodiversity Research Institute."), 
+                 style = "padding-left: 30px; margin-top: -20px; color: steelblue; font-size: 14px")
+             )
+             ),
+           
+           # fluidRow(
+           #   column(12, 
+           #          hr()
+           #   )),
+           # 
+           # fluidRow(
+           #   p("This tool was developed by Biodiversity Research Institute and NYSERDA.", 
+           #     style = "padding: 20px; color: steelblue; font-size: 14px")
+           # )
+           # fluidRow(
+           #   column(width = 2),
+           #   column(width = 4,
+           #          shinyTree("general_mmps_tree", checkbox = TRUE),
+           #          bsTooltip("general_mmps_tree",
+           #                    "Categories or types of specific mitigation practices gathered in the spreadsheets. Generalized mitigation practices needed to be general enough that multiple specific mitigation practices would aggregate into a generalized mitigation practice category. Generalized mitigation practices have also been designed to be mutually exclusive.",
+           #                    "left",
+           #                    options = list(container = "body")),
+           #          
+           #          shinyTree("resources_tree", checkbox = TRUE),
+           #          bsTooltip("resources_tree",
+           #                    "Mitigation practices are focused on minimizing and avoiding potential impacts of offshore wind energy development on the following resources",
+           #                    "left",
+           #                    options = list(container = "body")),
+           #          
+           #          shinyTree("stressors_tree", checkbox = TRUE),
+           #          bsTooltip("stressors_tree",
+           #                    "External stimuli that can cause changes to the behavioral, physical, chemical, and/or biological characteristics of an organism, species, or the ecosystem inhabited by the organism/species.",
+           #                    "left",
+           #                    options = list(container = "body")),
+           #          
+           #          shinyTree("potential_effects_tree", checkbox = TRUE),
+           #          bsTooltip("potential_effects_tree",
+           #                    "The changes to the behavioral, physical, chemical, and/or bio- logical characteristics of an organism, species, or the ecosystem inhabited by the organism/species due to stressors related to offshore wind energy development.",
+           #                    "left",
+           #                    options = list(container = "body")),
+           #          
+           #          shinyTree("dev_phase_tree", checkbox = TRUE),
+           #          bsTooltip("dev_phase_tree",
+           #                    "The stages of offshore wind facility development/operation, each of which encompass a number of activities and, as a result, may have different types of stressors.",
+           #                    "right",
+           #                    options = list(container = "body")),
+           #          shinyTree("industries_tree", checkbox = TRUE),
+           #          bsTooltip("industries_tree",
+           #                    "The type of industry for which mitigation practices have been suggested or implemented in the U.S. or other countries.",
+           #                    "right",
+           #                    options = list(container = "body")),
+           #          
+           #          shinyTree("implem_status_tree", checkbox = TRUE),
+           #          bsTooltip("implem_status_tree",
+           #                    "The implementation status defines the degree to which the use or efficacy of a mitigation practice has been tested.",
+           #                    "right",
+           #                    options = list(container = "body")),
+           #          
+           #          shinyTree("mitigation_hierarchy_tree", checkbox = TRUE),
+           #          bsTooltip("mitigation_hierarchy_tree",
+           #                    "The most applicable level(s) of the mitigation hierarchy was(were) chosen for each mitigation practice.",
+           #                    "right",
+           #                    options = list(container = "body"))   
+           #          
+           #   ),
+           #   column(width = 6,
+           # 
+           #          shinyTree("subgroup_tree", checkbox = TRUE),
+           #          bsTooltip("subgroup_tree",
+           #                    "Resource subgroups.",
+           #                    "right",
+           #                    options = list(container = "body")),
+           # 
+           # 
+           #          )
+           # ),
+           # fluidRow(
+           #   br(), br(), br(),br(),
+           #   
+           #   actionButton(
+           #     inputId = "filter_btn",
+           #     "MPD Query",
+           #     width = "200px",
+           #     style = "width: 100px; background-color: cornflowerblue; color: white; font-weight: bold;", 
+           #     class = "btn-filter"
+           #   ), 
+           #   style = "display: flex; align-items: center; justify-content: center;"
+           # ),
 
-           fluidRow(
-             p("This tool was developed by Biodiversity Research Institute and NYSERDA.", 
-               style = "padding: 20px; color: steelblue; font-size: 14px")
-           )
   ), #tabpanel
 
-  tabPanel("Mitigation data",
-           # mititigation data table for display
-           downloadButton("download_btn", 
-                          HTML("Download</br>Filtered Data"), 
-                          style = "width: 130px; padding-left: 40 px; background-color: Goldenrod; color: white; font-weight: bold;"),
-           br(), br(),
-           DT::dataTableOutput("data_table")),
+  tabPanel("Filter Database",
+           
+           fluidRow(
+             column(
+               width = 3,
+               style='margin-bottom:20px;border-right:1px solid; padding: 5px;',
 
-  tabPanel("References",
+               fluidRow(
+                 column(8, 
+                 h5("Click the plus sign to select a category. If you want to select specific subcategories, press the down arrow to the left of the category checkbox to see the list of subcategories.",
+                    style = "margin-left: 10px; margin-top: 0px; padding-right: 0px;")),
+                 column(4, 
+                        actionButton(
+                          inputId = "filter_btn",
+                          HTML("Click to</br>Filter Data"),
+                          width = "200px",
+                          style = "width: 100px; background-color: cornflowerblue; color: white; font-weight: bold; margin-left: -10px;",
+                          class = "btn-filter"),
+                        style = "padding-right: 10px;"
+                        ),
+                 
+                 # downloadButton("download_btn",
+                 #                HTML("Download</br>Filtered Data"),
+                 #                style = "width: 130px; padding-left: 40 px; background-color: Goldenrod; color: white; font-weight: bold; margin-left: 20px;"),
+                 style = "margin-bottom: 0px;"
+                 # style = "display: flex; align-items: center; justify-content: center;"
+               ),
+               # h5("Click the plus sign to select a category. If you want to select specific subcategories, press the down arrow to the left of the category checkbox to see the list of subcategories.",
+               #    style = "margin-left: 20px;"),
+               h3("Filter categories", style = "margin-left: 20px; margin-top: 0px;"),
+               shinyTree("general_mmps_tree", checkbox = TRUE),
+               bsTooltip(
+                 "general_mmps_tree",
+                 "Categories or types of mitigation practices identified during literature review.",
+                 "right",
+                 options = list(container = "body")
+               ),
+               
+               # shinyTree("resources_tree", checkbox = TRUE),
+               # bsTooltip(
+               #   "resources_tree",
+               #   "Mitigation practices are focused on minimizing and avoiding potential impacts of offshore wind energy development on the following resources",
+               #   "right",
+               #   options = list(container = "body")
+               # ),
+               
+               shinyTree("subgroup_tree", checkbox = TRUE),
+               bsTooltip(
+                 "subgroup_tree",
+                 "Resource subgroups.",
+                 "right",
+                 options = list(container = "body")
+               ),
+
+               shinyTree("stressors_tree", checkbox = TRUE),
+               bsTooltip(
+                 "stressors_tree",
+                 "External stimuli that can cause changes to the behavioral, physical, chemical, and/or biological characteristics of an organism, species, or the ecosystem inhabited by the organism/species.",
+                 "right",
+                 options = list(container = "body")
+               ),
+               
+               shinyTree("potential_effects_tree", checkbox = TRUE),
+               bsTooltip(
+                 "potential_effects_tree",
+                 "The changes to the behavioral, physical, chemical, and/or bio- logical characteristics of an organism, species, or the ecosystem inhabited by the organism/species due to stressors related to offshore wind energy development.",
+                 "right",
+                 options = list(container = "body")
+               ),
+               
+               shinyTree("dev_phase_tree", checkbox = TRUE),
+               bsTooltip(
+                 "dev_phase_tree",
+                 "The stages of offshore wind facility development/operation, each of which encompass a number of activities and, as a result, may have different types of stressors.",
+                 "right",
+                 options = list(container = "body")
+               ),
+               shinyTree("industries_tree", checkbox = TRUE),
+               bsTooltip(
+                 "industries_tree",
+                 "The type of industry for which mitigation practices have been suggested or implemented in the U.S. or other countries.",
+                 "right",
+                 options = list(container = "body")
+               ),
+               
+               shinyTree("implem_status_tree", checkbox = TRUE),
+               bsTooltip(
+                 "implem_status_tree",
+                 "The implementation status defines the degree to which the use or efficacy of a mitigation practice has been tested.",
+                 "right",
+                 options = list(container = "body")
+               ),
+               
+               shinyTree("mitigation_hierarchy_tree", checkbox = TRUE),
+               bsTooltip(
+                 "mitigation_hierarchy_tree",
+                 "The most applicable level(s) of the mitigation hierarchy was(were) chosen for each mitigation practice.",
+                 "right",
+                 options = list(container = "body")
+               ),
+               
+             ), 
+               
+             column(width = 9,
+                    # mitigation data table for display
+                    DT::dataTableOutput("data_table"))
+           ),
+           fluidRow(
+             hr(),
+             p(paste("Date database last updated:", MPD_db_date), style = "margin-left: 20px;")
+             )
+           ),
+
+  tabPanel("Filtered References",
            # References for display
-           downloadButton("download_refs_btn", 
-                          HTML("Download</br>Filtered Refs"), 
-                          style = "width: 130px; padding-left: 40 px; background-color: maroon; color: white; font-weight: bold;"),
-           br(), br(),
-           DT::dataTableOutput("refs")),
+           # downloadButton("download_refs_btn", 
+           #                HTML("Download</br>Filtered Refs"), 
+           #                style = "width: 130px; padding-left: 40 px; background-color: maroon; color: white; font-weight: bold;"),
+           # br(), br(),
+           fluidRow(
+             column(width = 12, align = "center",
+              DT::dataTableOutput("refs"))),
+           fluidRow(
+             hr(),
+             p(paste("Date database last updated:", MPD_db_date), style = "margin-left: 20px;")
+           )
+           ),
 
   tabPanel("Glossary",
            # Glossary for display
            selectInput(inputId = "glossary_grp", "Group:", choices = c("Stressors", "Potential Effects", "Development Phases",
-                                                                      "Industry", "Implementation Status",
-                                                                      "Mitigation Hierarchy", "Generalized mitigation practices")),
+                                                                      "Industry Origin", "Implementation Status",
+                                                                      "Mitigation Hierarchy", "Mitigation Type")),
            htmlOutput("grp_def"),
            htmlOutput("glossary")
   ),
@@ -274,12 +416,12 @@ server <- function(input, output, session) {
   
   #tree choices
   output$general_mmps_tree <- renderTree(general_mmps_choices)
-  output$resources_tree <- renderTree(resources_choices)
+  # output$resources_tree <- renderTree(resources_choices)
+  output$subgroup_tree <- renderTree(subgroup_choices)
   output$stressors_tree <- renderTree(stressors_choices)
   output$potential_effects_tree <- renderTree(potential_effects_choices)
   output$dev_phase_tree <- renderTree(dev_phase_choices)
   output$industries_tree <- renderTree(industries_choices)
-  output$subgroup_tree <- renderTree(subgroup_choices)
   output$implem_status_tree <- renderTree(implem_status_choices)
   output$mitigation_hierarchy_tree <- renderTree(mitigation_hierarchy_choices)
   
@@ -292,10 +434,10 @@ server <- function(input, output, session) {
       grp == "Stressors" ~ stressor_preamb,
       grp == "Potential Effects" ~ pot_effects_preamb,
       grp == "Development Phases" ~ dev_phase_preamb,
-      grp == "Industry" ~ industry_preamb,
+      grp == "Industry Origin" ~ industry_preamb,
       grp == "Implementation Status" ~ implement_status_preamb,
       grp == "Mitigation Hierarchy" ~ mit_heir_preamb,
-      grp == "Generalized mitigation practices" ~ gen_mitpractices_preamb
+      grp == "Mitigation Type" ~ gen_mitpractices_preamb
     )
     # renderText(preamb_out)
     preamb_out
@@ -307,48 +449,76 @@ server <- function(input, output, session) {
       grp == "Stressors" ~ stressor_defs,
       grp == "Potential Effects" ~ pot_effects_defs,
       grp == "Development Phases" ~ dev_phase_defs,
-      grp == "Industry" ~ industry_defs,
+      grp == "Industry Origin" ~ industry_defs,
       grp == "Implementation Status" ~ implement_status_defs,
       grp == "Mitigation Hierarchy" ~ mit_heir_defs,
-      grp == "Generalized mitigation practices" ~ gen_mitpractices_defs
+      grp == "Mitigation Type" ~ gen_mitpractices_defs
     )
     def_out
     # renderText(def_out)
   })
   
-  # output$downloads <- renderText("<</h4>")
-  
+  # c(cat(paste0('"',names(mmp_data), '"'), sep = ", ")
+  mmp_field_order <- c("MMPID", "MMP", "GeneralizedMMP", "Resources", "SubGroup", "Stressors", "PotentialEffects", 
+  "DevelopmentPhases", "Industry", "MitigationHierarchy", "ImplementationStatus", "ImplementationDetails",  
+  "SpeciesNotes", "Citations", "Notes")
+
   # Read in Excel file
-  mmp_data <- read_excel("Full-MMP-and-Reference-List-8-24-2023.xlsx", sheet = "MMP Data")
+  # write out "Electromagnetic Fields (EMF)" instead of just "EMF" under stressors
+  mmp_data <- read_excel("Full-MMP-and-Reference-List-8-24-2023.xlsx", sheet = "MMP Data") %>% 
+    dplyr::select(-c("MitigationMonitoring")) %>%
+    dplyr::mutate(across('Stressors', ~ str_replace(.x, 'EMF', 'Electromagnetic Fields (EMF)'))) %>% 
+    dplyr::select(all_of(mmp_field_order))
+  
   #remove NULLS, convert "NA" to NA
   mmp_data[mmp_data=="NULL"] <-  NA
   mmp_data[mmp_data=="NA"] <-  NA
   
+  empty_data_out <- mmp_data %>% 
+    filter(GeneralizedMMP == "pistachio gelato")
+  
   # Render data table
-  output$data_table <- DT::renderDT(datatable(filtered_data()[,c(2:16)],
-                                              selection = 'none', rownames = F, class = "display nowrap",
+  output$data_table <- DT::renderDT(datatable(filtered_data()[,c(2:15)],
+                                              selection = 'none', 
+                                              rownames = F, 
+                                              class = "display nowrap",
+                                              plugins = 'ellipsis',
+                                              extensions = c('Responsive', 'Buttons'), #, 'FixedColumns'),
                                               #add a download button to the table. https://rstudio.github.io/DT/extensions.html
-                                              # extensions = 'Buttons', 
+                                              colnames = c("MMP", "Mitigation Type", "Resource", "Resource Sub-group", "Stressors", "Potential Effects",  
+                                                "Development Phase", "Industry", "Mitigation Hierarchy", "Implementation Status", "Implementation Details",  
+                                                "Species Notes", "Citations", "Notes"),
                                               options = list(
-                                                pageLength = 15, 
-                                                autoWidth = T,
+                                                fixedColumns = list(leftColumns = 1),
+                                                pageLength = 15,
+                                                autoWidth = T,  #required to be T for column width setting to work
                                                 paging = TRUE,
                                                 searching = TRUE,
-                                                scrollX = TRUE
-                                                # dom = 'Bfrtip',
-                                                # buttons = list(list(extend = 'csv', filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_", strftime(Sys.time(), "%Y%m%d_%H%M%S"))), 
-                                                #                list(extend = 'excel', filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_", strftime(Sys.time(), "%Y%m%d_%H%M%S"))))
-                                                # columnDefs = list(
-                                                #   list(
-                                                #     targets = c(0:8),
-                                                #     render = JS(
-                                                #       "function(data, type, row, meta) {",
-                                                #       "return type === 'display' && data.length > 10 ?",
-                                                #       "'<span title=\"' + data + '\">' + data.substr(0, 10) + '...</span>' : data;",
-                                                #       "}")
-                                                #     ))
-                                                )
-  )
+                                                scrollX = TRUE,
+                                                escape = FALSE,
+                                                dom = 'Bfrtip',
+                                                buttons = list(list(extend = 'csv', 
+                                                                    filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_", strftime(Sys.time(), "%Y%m%d_%H%M%S")), 
+                                                                    exportOptions = list(
+                                                                      modifier = list(page = "all"),
+                                                                      orthogonal = "export")
+                                                                    ),
+                                                               list(extend = 'excel', 
+                                                                    filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_", strftime(Sys.time(), "%Y%m%d_%H%M%S")),
+                                                                    exportOptions = list(
+                                                                      modifier = list(page = "all"),
+                                                                      orthogonal = "export"))
+                                                               ),
+                                                columnDefs = list(
+                                                  list(
+                                                    width = "14em",
+                                                    targets = 0:13,
+                                                    render = JS("$.fn.dataTable.render.ellipsis(20)")
+                                                    ))
+                                                # Whether the buttons export all data or only visible data is determined by the server argument 
+                                                # in the DT::renderDT function call. If server=FALSE then the buttons will export all data in the 
+                                                # table, while if server=TRUE they will only export visible data.
+                                                )), server = F 
   )
   
   #Load the reference data
@@ -356,47 +526,56 @@ server <- function(input, output, session) {
   
   #render filtered refs
   output$refs <- DT::renderDT(datatable(filtered_refs()[,c(2:4)],
-                                        selection = 'none', rownames = F, 
-                                        # extensions = 'Buttons', 
+                                        selection = 'none', 
+                                        rownames = F, 
+                                        class = "display nowrap",
+                                        plugins = 'ellipsis',
+                                        extensions = c('Buttons'),
                                         options = list(
-                                          pageLength = 8, 
+                                          pageLength = 15,
                                           paging = TRUE,
                                           searching = TRUE,
                                           autoWidth = T,
-                                          scrollX = TRUE
-                                          # dom = 'Bfrtip',
-                                          # buttons = list(list(extend = 'csv', filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_refs_", strftime(Sys.time(), "%Y%m%d_%H%M%S"))), 
-                                          #                list(extend = 'excel', filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_refs_", strftime(Sys.time(), "%Y%m%d_%H%M%S"))))
-                                          )))
-  
-  # #select all data if unselected
-  # observeEvent(input$all_data, {
-  #   select_all_data()
-  #   
-  # })
-  # 
-  # #select all data if unselected
-  # observeEvent(input$clear_data, {
-  #   clear_all_data()
-  #   
-  # })
-  
-  selection_tree_1level <- function(tree_selection) {
-    sapply(tree_selection, function(level) {
-      names(level[[1]])
-    })
-  }
-  
+                                          scrollX = TRUE,
+                                          escape = FALSE,
+                                          dom = 'Bfrtip',
+                                          buttons = list(list(extend = 'csv', 
+                                                              filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_refs_", strftime(Sys.time(), "%Y%m%d_%H%M%S")),
+                                                              exportOptions = list(
+                                                                modifier = list(page = "all"),
+                                                                orthogonal = "export")),
+                                                         list(extend = 'excel', 
+                                                              filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_refs_", strftime(Sys.time(), "%Y%m%d_%H%M%S")),
+                                                              exportOptions = list(
+                                                                modifier = list(page = "all"),
+                                                                orthogonal = "export"))),
+
+                                             columnDefs = list(
+                                               list(
+                                                 width = "14em",
+                                                 targets = 0:1,
+                                                 render = JS("$.fn.dataTable.render.ellipsis(20)")
+                                               ),
+                                               list(
+                                                 width = "14em",
+                                                 targets = 2,
+                                                 render = JS("$.fn.dataTable.render.ellipsis(60)")
+                                               )
+                                               
+                                               ))
+                              ))
+
+
   selection_tree_multilevel <- function(tree_selection) {
     sapply(tree_selection, function(level) {
       value = ""
       n_levels <- purrr::vec_depth(level[[1]])
       if (n_levels == 2){
-        value = paste0("(", names(level[[1]]), ")")}
+        value = paste0("(\\", names(level[[1]]), "\\b)")}
       if (n_levels == 3){
-        value = paste0("(", names(level[[1]][[1]]), ")")}
+        value = paste0("(\\", names(level[[1]][[1]]), "\\b)")}
       if (n_levels == 4){
-        value = paste0("(", names(level[[1]][[1]][[1]]), ")")}
+        value = paste0("(\\", names(level[[1]][[1]][[1]]), "\\b)")}
       return(value)
     })
   }
@@ -405,32 +584,39 @@ server <- function(input, output, session) {
   filtered_data <- eventReactive(input$filter_btn, {
     
     general_mmps_selected <- selection_tree_multilevel(get_selected(input$general_mmps_tree, format = "slices"))
-    resources_selected <- selection_tree_multilevel(get_selected(input$resources_tree, format = "slices"))
+    # resources_selected <- selection_tree_multilevel(get_selected(input$resources_tree, format = "slices"))
+    subgroup_selected <- selection_tree_multilevel(get_selected(input$subgroup_tree, format = "slices"))
     stressors_selected <- selection_tree_multilevel(get_selected(input$stressors_tree, format = "slices"))
     potential_effects_selected <- selection_tree_multilevel(get_selected(input$potential_effects_tree, format = "slices"))
     dev_phase_selected <- selection_tree_multilevel(get_selected(input$dev_phase_tree, format = "slices"))
     industries_selected <- selection_tree_multilevel(get_selected(input$industries_tree, format = "slices"))
-    # browser()
-    subgroup_selected <- selection_tree_multilevel(get_selected(input$subgroup_tree, format = "slices"))
     implem_status_selected <- selection_tree_multilevel(get_selected(input$implem_status_tree, format = "slices"))
     mitigation_hierarchy_selected <- selection_tree_multilevel(get_selected(input$mitigation_hierarchy_tree, format = "slices"))
     
-    data_out <- mmp_data %>%
-      #multiple options to filter out in input and also in columns
-      #need to add word boundaries
-      filter(grepl(paste0(general_mmps_selected, collapse="|"), GeneralizedMMP) &
-               grepl(paste0(resources_selected, collapse="|"), Resources) &
-               grepl(paste0(stressors_selected, collapse="|"), Stressors) &
-               grepl(paste0(potential_effects_selected, collapse="|"), PotentialEffects) &
-               grepl(paste0(dev_phase_selected, collapse="|"), DevelopmentPhases) &
-               grepl(paste0(industries_selected, collapse="|"), Industry) &
-               grepl(paste0(subgroup_selected, collapse="|"), SubGroup) &
-               grepl(paste0(implem_status_selected, collapse="|"), ImplementationStatus) &
-               grepl(paste0(mitigation_hierarchy_selected, collapse="|"), MitigationHierarchy)
-      )
-    # browser()
+    #check to see if anything selected, if not return empty header
+    if(length(general_mmps_selected)  + length(stressors_selected) + length(potential_effects_selected) + length(dev_phase_selected) + 
+       length(industries_selected) + length(subgroup_selected) + length(implem_status_selected) + length(mitigation_hierarchy_selected) > 0){
+      
+      data_out <- mmp_data %>%
+        #multiple options to filter out in input and also in columns
+        #need to add word boundaries
+        filter(grepl(paste0(general_mmps_selected, collapse="|"), GeneralizedMMP) &
+                 # grepl(paste0(resources_selected, collapse="|"), Resources) &
+                 grepl(paste0(subgroup_selected, collapse="|"), SubGroup) &
+                 grepl(paste0(stressors_selected, collapse="|"), Stressors) &
+                 grepl(paste0(potential_effects_selected, collapse="|"), PotentialEffects) &
+                 grepl(paste0(dev_phase_selected, collapse="|"), DevelopmentPhases) &
+                 grepl(paste0(industries_selected, collapse="|"), Industry) &
+                 grepl(paste0(implem_status_selected, collapse="|"), ImplementationStatus) &
+                 grepl(paste0(mitigation_hierarchy_selected, collapse="|"), MitigationHierarchy)
+        )
+      return(data_out)
+    } else {
+      #return empty frame
+      return(empty_data_out)
+      
+    }
 
-    return(data_out)
   })
   
   #filter references too based on mmp data
@@ -439,33 +625,33 @@ server <- function(input, output, session) {
       filter(MMPID %in% filtered_data()$MMPID)
   })
 
-  #navigate to "MMP data table" tab once filter selections made
-  observeEvent(filtered_data(), 
-               updateTabItems(session, inputId = "MPDTool", selected = "Mitigation data")
-  )
+  # #navigate to "MMP data table" tab once filter selections made
+  # observeEvent(filtered_data(), 
+  #              updateTabItems(session, inputId = "MPDTool", selected = "Mitigation data")
+  # )
   
-  # Download filtered data as CSV file
-  output$download_btn <- downloadHandler(
-    filename = function() {
-      paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_data_", strftime(Sys.time(), "%Y%m%d_%H%M%S"),'.csv')
-    },
-    content = function(file) {
-      #combine data with full refs
-      # data_export <- dplyr::left_join(filtered_data(), filtered_refs())
-      write.csv(filtered_data(), file, row.names = FALSE)
-    }
-  )
+  # # Download filtered data as CSV file
+  # output$download_btn <- downloadHandler(
+  #   filename = function() {
+  #     paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_data_", strftime(Sys.time(), "%Y%m%d_%H%M%S"),'.csv')
+  #   },
+  #   content = function(file) {
+  #     #combine data with full refs
+  #     # data_export <- dplyr::left_join(filtered_data(), filtered_refs())
+  #     write.csv(filtered_data(), file, row.names = FALSE)
+  #   }
+  # )
   
-  # Download filtered data as CSV file
-  output$download_refs_btn <- downloadHandler(
-    filename = function() {
-      paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_refs_", strftime(Sys.time(), "%Y%m%d_%H%M%S"),'.csv')
-    },
-    content = function(file) {
-      #combine data with full refs
-      write.csv(filtered_refs(), file, row.names = FALSE)
-    }
-  )
+  # # Download filtered data as CSV file
+  # output$download_refs_btn <- downloadHandler(
+  #   filename = function() {
+  #     paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_refs_", strftime(Sys.time(), "%Y%m%d_%H%M%S"),'.csv')
+  #   },
+  #   content = function(file) {
+  #     #combine data with full refs
+  #     write.csv(filtered_refs(), file, row.names = FALSE)
+  #   }
+  # )
   
 } #server
 

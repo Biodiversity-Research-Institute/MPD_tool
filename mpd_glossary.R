@@ -288,9 +288,9 @@ mit_heir_defs <-
     )
   ))
 
-gen_mitpractices_preamb <- paste(h4("Generalized mitigation practices"),
+gen_mitpractices_preamb <- paste(h4("Mitigation Type"),
         
-        p(em("Generalized mitigation practices are categories or types of specific mitigation practices gathered in the spreadsheets. Generalized mitigation practices needed to be general enough that multiple specific mitigation practices would aggregate into a generalized mitigation practice category. Generalized mitigation practices have also been designed to be mutually exclusive.")))
+        p(em("Categories or types of mitigation practices identified during literature review.")))
 
 gen_mitpractices_defs <-
   paste(
