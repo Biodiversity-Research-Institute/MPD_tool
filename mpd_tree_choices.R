@@ -71,12 +71,8 @@ subgroup_choices <- list(
       'Pinnipeds'= structure("",sttype="default",sticon="glyphicon glyphicon-record"),
       'North Atlantic Right Whale' = structure("",sttype="default",sticon="glyphicon glyphicon-record")),
       sttype="default",stopened=F,sticon="glyphicon glyphicon-plus", stdisabled=F),
-    'Sea Turtles' = structure(list(
-      'Sea Turtles' = structure("",sttype="default",sticon="glyphicon glyphicon-record")),
-      sttype="default",stopened=F,sticon="glyphicon glyphicon-plus", stdisabled=F)
-  ),
-  sttype="default",stopened=T,sticon="glyphicon glyphicon-plus")
-)
+    'Sea Turtles' = structure(list(), sttype="default",stopened=F,sticon="glyphicon glyphicon-plus", stdisabled=F)),
+  sttype="default",stopened=T,sticon="glyphicon glyphicon-plus"))
 
 # stressors_choices <- generate_choices(mmp_data$Stressors)
 # [1] "Bottom Disturbance"                "Changes in Vessel Traffic"         "Effects to Fishery Target Species" "EMF"                              
@@ -123,10 +119,10 @@ potential_effects_choices <- list(
 
 dev_phase_choices <- list(
   'Development phases' = structure(list(
-    'Pre-construction' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F)), 
+    'Pre-construction' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F), 
     'Construction' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Operation and Maintenance' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
-    'Decommissioning' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
+    'Decommissioning' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F)),
     sttype="default",stopened=F,sticon="glyphicon glyphicon-plus"))
 
 # industries_choices <- generate_choices(mmp_data$Industry)
