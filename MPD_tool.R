@@ -35,9 +35,9 @@ library(DT)
 library(stringr)
 
 unique_no_na <- function(x) unique(x[!is.na(x)])
-MPD_version_num = "0.11"
+MPD_version_num = "0.14"
 MPD_version_name = "Primary Artemis"
-MPD_db_date = "24 August 2023"
+MPD_db_date = "30 November 2023"
 
 options(shiny.trace = F)
 
@@ -49,7 +49,7 @@ options(shiny.trace = F)
 ##################################################################################################################################################
 
 # Define UI
-ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_version_name), 
+ui <- navbarPage(title = paste("MPD version: ", MPD_version_num, "-",MPD_version_name), 
                  id =  "MPDTool",
                  header = list(),
 
@@ -57,61 +57,53 @@ ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_versio
            fluidRow(
              column(width = 12, 
                     # img(src = "https://www.nyftwg.com/wp-content/uploads/2020/04/offshore-windfarm-1.jpg", height = "100%"),
-                    h2("EnvironmentaL Monitoring Options (ELMO) Tool", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
+                    h2("Mitigation Practices Database (MPD) Tool for Offshore Wind", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
                     # p(paste("Version: ", MPD_version_num, "-",MPD_version_name), style = "padding-left: 10px; margin-bottom: 10px;"),
-                    h3("Resources", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
-                    a("Quick Start Guide", 
-                      href = 'MMP Tool Quick Start Guide 3-24-20.pdf',
-                      style = "padding-left: 30px; padding-right: 50px; font-weight: 600; font-size: 18px;", 
-                      target="_blank"),
-                    a("User Manual", 
-                      href = 'MMP Tool User Manual 3-24-20.pdf',
-                      style = "padding-left: 0px; padding-right: 50px; font-weight: 600; font-size: 18px;", 
-                      target="_blank"),
-                    a("Tool Glossary", 
-                      href = 'MMP Tool Glossary 3-24-20.pdf',
-                      style = "padding-left: 0px; padding-right: 50px; font-weight: 600; font-size: 18px;", 
-                      target="_blank"),
-                    a("Full Database Download", 
-                      href = "Full-MMP-and-Reference-List-8-24-2023.zip",
-                      style = "padding-left: 0px; padding-right: 20px; font-weight: 600; font-size: 18px;"),
+
                     h3("Background", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
-                    h5(HTML(paste("New York State Energy Research and Development Authority (NYSERDA) has developed a", 
-                                  "Mitigation Practices Discovery (MPD) Tool that is publicly available  for use",
-                                  "by environmental and fisheries stakeholders. It houses a searchable database of",
-                                  "mitigation practices drawing from multiple industries but that may be relevant to",
-                                  "avoiding, minimizing, offsetting and restoring potential effects of offshore wind",
-                                  "energy development on wildlife, the environment, and fisheries.",
+                    p(HTML(paste("New York State Energy Research and Development Authority (NYSERDA) has developed a ",
+                                  "Mitigation Practices Database (MPD) Tool for Offshore Wind (previously the Mitigation and ",
+                                  "Monitoring or MMP Tool) that is publicly available for use by environmental and fisheries ", 
+                                  "stakeholders. It houses a searchable database of potential mitigation practices that may be relevant ",
+                                  "to avoiding, minimizing, offsetting and restoring potential effects of offshore wind energy ",
+                                  "development on wildlife, the environment, and fisheries.",
                                   "<br>",
                                   "<br>",
-                                  "The tool is searchable by various categories, including but not limited to:",
-                                  "<ul>",
-                                  "<li>Resource Groups - birds/bats, marine mammals/sea turtles, fish, benthos, fisheries</li>",
-                                  "<li>Potential effect; and</li>",
-                                  "<li>Development phases of offshore wind</li>",
-                                  "</ul>",
-                                  "<br>",
-                                  "As part of the effort to support development and evaluation of mitigation practices, the Tool provides details about these practices ",
-                                  "that could support further evaluation of how best to incorporate mitigation practices into the state’s plans for offshore wind ",
-                                  "energy development. This Tool does not prioritize or judge the value of individual or combined mitigation practices, and it does not consider site-",
-                                  "and project-specific conditions that might affect how and whether certain mitigation practices may be practicably implemented. ",
-                                  "It does, however, provide several sorting criteria that may be useful to the Environmental Technical Working Group (E-TWG) and Fisheries Technical",
-                                  "Working Group (F-TWG) and other users when assessing potential mitigation practices.")), 
-                    style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; font-weight: bold; white-space: normal;"),
+                                  "The Tool is searchable by various categories, including species group, type of effect, offshore wind ",
+                                  "development phase, and implementation status (e.g., whether the mitigation measure has been ",
+                                  "tested or shown to be effective). This Tool does not prioritize or assess the value of individual or ",
+                                  "combined mitigation practices, and it does not consider site- and project-specific conditions that ",
+                                  "might affect how and whether certain mitigation practices may be practicably implemented.")),
+                    style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; white-space: normal; font-size: 16px;"),
+                   h3("Resources", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
+                   a("User Manual", 
+                     href = 'MPD Updated user manual 2023_final.pdf',
+                     style = "padding-left: 30px; padding-right: 50px; font-weight: 600; font-size: 18px;", 
+                     target="_blank"),
+                   a("Full Database Download", 
+                     href = "Full-MMP-and-Reference-List-10-13-2023.zip",
+                     style = "padding-left: 0px; padding-right: 20px; font-weight: 600; font-size: 18px;"),
+                                        
                     h3("Instructions", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
-                    h5(HTML(paste(
+                    p(HTML(paste(
                       "<ul>",
-                      "<li>Click on the \"Filter Database\" tab in the header.</li>",
-                      "<li>Select the filter categories you want to display - by default all categories are off.</li>",
-                      "<li>Hover over filters for term definitions.</li>",
-                      "<li>To see the full database, you can either click the query button with all filters applied or download the full database at the link above (\"Full Database Download\").</li>",
-                      "<li>Download the filtered data as CSV or Excel file by clicking one of the buttons above the table.</li>",
-                      "<li>References can be displayed for the filtered database selection in the \"Filtered Referenecs\" tab.</li>",
-                      "<li>Download the filtered references as CSV or Excel file by clicking one of the buttons above the table.</li>",
-                      "<li>A glossary of terms is available in the \"Glossary\" tab.</li>",
+                      "<li>Click on the <strong>\"Filter Database\"</strong> tab in the header.</li>",
+                      "<li>Select the filter categories you want to display (by default, all categories are off).",
+                      "Categories can be expanded to view subgroups using the arrow buttons to the left of each category name.</li>",
+                      "<li>Hover over filters for term definitions or go to the <strong>\"Glossary\"</strong> tab in the header. ",
+                      "Term definitions are also included in the user manual (link above).</li>",
+                      "<li>Once your selections are made, click the <strong>\"Click to Filter Data\"</strong> query button to filter the database.</li>",
+                      "<li>The resulting database entries will show up in a table to the right in the same tab. ",
+                      "For fields that are too long to view on screen, hover over them with your mouse to see the full entry. ",
+                      "It is recommended that you download the filtered data to explore it in detail.</li>",
+                      "<li>To see the full database, you can either click the query button with all filters applied or ",
+                      "download the full database at the link above (<strong>\"Full Database Download\"</strong>).</li>",
+                      "<li>Download the filtered data by clicking the <strong>\"CSV\"</strong> or <strong>\"Excel\"</strong> buttons above the table.</li>",
+                      "<li>References can be displayed for the filtered database selection in the <strong>\"Filtered References\"</strong> tab. ",
+                      "Like the main table, filtered references can be downloaded by clicking the <strong>\"CSV\"</strong> or <strong>\"Excel\"</strong> buttons above the table.</li>",
                       "</ul>"
                       )),
-                       style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; font-weight: bold; white-space: normal;")
+                       style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; white-space: normal;font-size: 16px;")
                       ),
              fluidRow(
                column(12, 
@@ -131,7 +123,7 @@ ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_versio
            fluidRow(
              column(
                width = 3,
-               style='margin-bottom:20px;border-right:1px solid; padding: 5px;',
+               style='margin-bottom:20px; border-right:1px solid; padding: 5px;',
 
                fluidRow(
                  column(8, 
@@ -142,33 +134,31 @@ ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_versio
                           inputId = "filter_btn",
                           HTML("Click to</br>Filter Data"),
                           width = "200px",
-                          style = "width: 100px; background-color: cornflowerblue; color: white; font-weight: bold; margin-left: -10px;",
+                          style = "width: 100px; background-color: cornflowerblue; color: white; font-weight: bold; margin-left: -10px; padding-right:10px;",
                           class = "btn-filter"),
                         style = "padding-right: 10px;"
                         ),
                  
-                 # downloadButton("download_btn",
-                 #                HTML("Download</br>Filtered Data"),
-                 #                style = "width: 130px; padding-left: 40 px; background-color: Goldenrod; color: white; font-weight: bold; margin-left: 20px;"),
                  style = "margin-bottom: 0px;"
                  # style = "display: flex; align-items: center; justify-content: center;"
                ),
 
                h3("Filter categories", style = "margin-left: 20px; margin-top: 0px;"),
-               shinyTree("general_mmps_tree", checkbox = TRUE),
+               
+               shinyTree("subgroup_tree", checkbox = TRUE),
                bsTooltip(
-                 "general_mmps_tree",
-                 "Categories or types of mitigation practices identified during literature review.",
+                 "subgroup_tree",
+                 "Resource subgroups.",
                  "right",
                  options = list(container = "body")
                ),
                
                hr(style = "margin-top: -1px; margin-bottom: -1px; height: 1px; background-color: #2980B9;"),
-
-               shinyTree("subgroup_tree", checkbox = TRUE),
+               
+               shinyTree("general_mmps_tree", checkbox = TRUE),
                bsTooltip(
-                 "subgroup_tree",
-                 "Resource subgroups.",
+                 "general_mmps_tree",
+                 "Categories or types of mitigation practices identified during literature review.",
                  "right",
                  options = list(container = "body")
                ),
@@ -245,11 +235,6 @@ ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_versio
            ),
 
   tabPanel("Filtered References",
-           # References for display
-           # downloadButton("download_refs_btn", 
-           #                HTML("Download</br>Filtered Refs"), 
-           #                style = "width: 130px; padding-left: 40 px; background-color: maroon; color: white; font-weight: bold;"),
-           # br(), br(),
            fluidRow(
              column(width = 12, align = "center",
               DT::dataTableOutput("refs"))),
@@ -275,7 +260,7 @@ ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_versio
     a(
       icon('github', "fa-2x"),
       href = 'https://github.com/Biodiversity-Research-Institute/MMP-tool',
-      style = "margin-top: -33px; padding-bottom: 0px; margin-left: 40px; padding-right: 0px",
+      style = "margin-top: -33px; padding-bottom: 0px; margin-left: 40px; padding-right: 4px",
       target = '_blank',
       id = "lbl_codeLink"),
     style = "float: left" 
@@ -288,7 +273,7 @@ ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_versio
       icon('bug', "fa-2x"),
       href = 'https://github.com/Biodiversity-Research-Institute/MMP-tool/issues',
       #exclamation-circle
-      style = "margin-top: -33px; padding-bottom: 0px; margin-left: -15px; padding-right: 0px",
+      style = "margin-top: -33px; padding-bottom: 0px; margin-left: -15px; padding-right: 4px",
       target = '_blank',
       id = "lbl_issuesLink"),
     style = "float: left"
@@ -300,7 +285,7 @@ ui <- navbarPage(title = paste("ELMO version: ", MPD_version_num, "-",MPD_versio
     a(
       img(src = "BRI_color_logo_no_words.png", height = "40px"),
       href = 'https://briwildlife.org',
-      style = "margin-top: -40px; padding-bottom: 0px; margin-left: -25px;, padding-right: 0px;",
+      style = "margin-top: -40px; padding-bottom: 0px; margin-left: -25px;, padding-right: 4px;",
       target = '_blank',
       id = "lbl_BRILogoLink"),
     style = "float: left"
@@ -380,75 +365,90 @@ server <- function(input, output, session) {
   })
   
   # c(cat(paste0('"',names(mmp_data), '"'), sep = ", ")
-  mmp_field_order <- c("MMPID", "MMP", "GeneralizedMMP", "Resources", "SubGroup", "Stressors", "PotentialEffects", 
-  "DevelopmentPhases", "Industry", "MitigationHierarchy", "ImplementationStatus", "ImplementationDetails",  
-  "SpeciesNotes", "Citations", "Notes")
+  mmp_field_order <- c("MMPID", "Mitigation Approach", "Description", "GeneralizedMMP", "Resources", "SubGroup", 
+                       "Stressors", "PotentialEffects", "DevelopmentPhases", "Industry", "MitigationHierarchy", 
+                       "ImplementationStatus", "ImplementationDetails", "SpeciesNotes", "Citations", "Notes")
 
   # Read in Excel file
+  MMP_DB_file = "Full-MMP-and-Reference-List-10-13-2023.xlsx"
+  
   # write out "Electromagnetic Fields (EMF)" instead of just "EMF" under stressors
-  mmp_data <- read_excel("Full-MMP-and-Reference-List-8-24-2023.xlsx", sheet = "MMP Data") %>% 
+  mmp_data <- read_excel(MMP_DB_file, sheet = "MMP Data") %>% 
     dplyr::select(-c("MitigationMonitoring")) %>%
-    dplyr::mutate(across('Stressors', ~ str_replace(.x, 'EMF', 'Electromagnetic Fields (EMF)'))) %>% 
+    # dplyr::mutate(across('Stressors', ~ str_replace(.x, 'EMF', 'Electromagnetic Fields (EMF)'))) %>% 
     dplyr::select(all_of(mmp_field_order))
   
   #remove NULLS, convert "NA" to NA
-  mmp_data[mmp_data=="NULL"] <-  NA
-  mmp_data[mmp_data=="NA"] <-  NA
+  mmp_data[mmp_data=="NULL"] <- NA
+  mmp_data[mmp_data=="NA"] <- NA
   
   empty_data_out <- mmp_data %>% 
     filter(GeneralizedMMP == "pistachio gelato")
   
   # Render data table
-  output$data_table <- DT::renderDT(datatable(filtered_data()[,c(2:15)],
+  output$data_table <- DT::renderDT(datatable(filtered_data()[,2:16],
                                               selection = 'none', 
                                               rownames = F, 
                                               class = "display nowrap",
                                               plugins = 'ellipsis',
-                                              extensions = c('Buttons','FixedColumns'), #, 'Responsive', 'FixedColumns'),
+                                              extensions = c('Buttons','FixedColumns'),
                                               #add a download button to the table. https://rstudio.github.io/DT/extensions.html
-                                              colnames = c("Mitigation Approach", "Mitigation Type", "Resource", "Resource Sub-group", "Stressors", "Potential Effects",  
-                                                "Development Phase", "Industry", "Mitigation Hierarchy", "Implementation Status", "Implementation Details",  
+                                              colnames = c("Mitigation Approach", "Description", "Mitigation Type", "Resource", "Resource Sub-group", "Stressors", "Potential Effects",
+                                                "Development Phases", "Industry", "Mitigation Hierarchy", "Implementation Status", "Implementation Details",
                                                 "Species Notes", "Citations", "Notes"),
                                               options = list(
+                                                # fixedHeader = TRUE,
                                                 fixedColumns = list(leftColumns = 1),
                                                 pageLength = 15,
-                                                autoWidth = T,  #required to be T for column width setting to work
+                                                # autoWidth = T,  #required to be T for column width setting to work
                                                 paging = TRUE,
                                                 searching = TRUE,
                                                 scrollX = TRUE,
                                                 escape = FALSE,
                                                 dom = 'Bfrtip',
-                                                buttons = list(list(extend = 'csv', 
-                                                                    filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_", strftime(Sys.time(), "%Y%m%d_%H%M%S")), 
+                                                buttons = list(list(extend = 'csv',
+                                                                    filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_", strftime(Sys.time(), "%Y%m%d_%H%M%S")),
                                                                     exportOptions = list(
                                                                       modifier = list(page = "all"),
                                                                       orthogonal = "export")
                                                                     ),
-                                                               list(extend = 'excel', 
+                                                               list(extend = 'excel',
                                                                     filename = paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_", strftime(Sys.time(), "%Y%m%d_%H%M%S")),
                                                                     exportOptions = list(
                                                                       modifier = list(page = "all"),
                                                                       orthogonal = "export"))
                                                                ),
+                                                rowCallback = JS(
+                                                  "function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {",
+                                                  "var full_text = 'Description: ' + aData[1]",
+                                                  # "if (nRow > 0) {",
+                                                  "$('td:eq(0)', nRow).attr('title', full_text);",
+                                                  "}"),
                                                 columnDefs = list(
                                                   list(
-                                                    width = "30em",
-                                                    targets = 0,
-                                                    render = JS("$.fn.dataTable.render.ellipsis(40)")
+                                                    width = "120em",
+                                                    targets = 0
+                                                    # render = JS("$.fn.dataTable.render.ellipsis(40)")
                                                   ),
+                                                  # list(
+                                                  #   visible = FALSE,
+                                                  #   targets = 1
+                                                  #   ),
                                                   list(
-                                                    width = "14em",
-                                                    targets = 1:13,
+                                                    width = "22em",
+                                                    targets = 1:14,
                                                     render = JS("$.fn.dataTable.render.ellipsis(20)")
                                                     ))
-                                                # Whether the buttons export all data or only visible data is determined by the server argument 
-                                                # in the DT::renderDT function call. If server=FALSE then the buttons will export all data in the 
+                                                # Whether the buttons export all data or only visible data is determined by the server argument
+                                                # in the DT::renderDT function call. If server=FALSE then the buttons will export all data in the
                                                 # table, while if server=TRUE they will only export visible data.
-                                                )), server = F 
+
+                                                )
+                                    ), server = F 
   )
   
   #Load the reference data
-  mmp_ref_data <- read_excel("Full-MMP-and-Reference-List-8-24-2023.xlsx", sheet = "cross-check")
+  mmp_ref_data <- read_excel(MMP_DB_file, sheet = "cross-check")
   
   #render filtered refs
   output$refs <- DT::renderDT(datatable(filtered_refs()[,c(2:4)],
@@ -497,11 +497,12 @@ server <- function(input, output, session) {
       value = ""
       n_levels <- purrr::vec_depth(level[[1]])
       if (n_levels == 2){
-        value = paste0("(\\", names(level[[1]]), "\\b)")}
+        # value = paste0("(\\", names(level[[1]]), "\\b)")}
+        value = paste0("(", names(level[[1]]), ")")}
       if (n_levels == 3){
-        value = paste0("(\\", names(level[[1]][[1]]), "\\b)")}
+        value = paste0("(", names(level[[1]][[1]]), ")")}
       if (n_levels == 4){
-        value = paste0("(\\", names(level[[1]][[1]][[1]]), "\\b)")}
+        value = paste0("(", names(level[[1]][[1]][[1]]), ")")}
       return(value)
     })
   }
@@ -522,7 +523,7 @@ server <- function(input, output, session) {
     #check to see if anything selected, if not return empty header
     if(length(general_mmps_selected)  + length(stressors_selected) + length(potential_effects_selected) + length(dev_phase_selected) + 
        length(industries_selected) + length(subgroup_selected) + length(implem_status_selected) + length(mitigation_hierarchy_selected) > 0){
-      
+      # browser()
       data_out <- mmp_data %>%
         #multiple options to filter out in input and also in columns
         #need to add word boundaries
@@ -540,7 +541,6 @@ server <- function(input, output, session) {
     } else {
       #return empty frame
       return(empty_data_out)
-      
     }
 
   })
@@ -551,37 +551,9 @@ server <- function(input, output, session) {
       filter(MMPID %in% filtered_data()$MMPID)
   })
 
-  # #navigate to "MMP data table" tab once filter selections made
-  # observeEvent(filtered_data(), 
-  #              updateTabItems(session, inputId = "MPDTool", selected = "Mitigation data")
-  # )
-  
-  # # Download filtered data as CSV file
-  # output$download_btn <- downloadHandler(
-  #   filename = function() {
-  #     paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_data_", strftime(Sys.time(), "%Y%m%d_%H%M%S"),'.csv')
-  #   },
-  #   content = function(file) {
-  #     #combine data with full refs
-  #     # data_export <- dplyr::left_join(filtered_data(), filtered_refs())
-  #     write.csv(filtered_data(), file, row.names = FALSE)
-  #   }
-  # )
-  
-  # # Download filtered data as CSV file
-  # output$download_refs_btn <- downloadHandler(
-  #   filename = function() {
-  #     paste0('MPD_tool_v', str_replace_all(MPD_version_num, "\\.", "_"), "_filtered_refs_", strftime(Sys.time(), "%Y%m%d_%H%M%S"),'.csv')
-  #   },
-  #   content = function(file) {
-  #     #combine data with full refs
-  #     write.csv(filtered_refs(), file, row.names = FALSE)
-  #   }
-  # )
   
 } #server
 
 # Run app
 shinyApp(ui, server)
-
 
