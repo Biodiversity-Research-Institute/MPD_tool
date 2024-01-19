@@ -259,7 +259,7 @@ ui <- navbarPage(title = paste("MPD version: ", MPD_version_num, "-",MPD_version
     class = "dropdown",
     a(
       icon('github', "fa-2x"),
-      href = 'https://github.com/Biodiversity-Research-Institute/MMP-tool',
+      href = 'https://github.com/Biodiversity-Research-Institute/MPD-tool',
       style = "margin-top: -33px; padding-bottom: 0px; margin-left: 40px; padding-right: 4px",
       target = '_blank',
       id = "lbl_codeLink"),
@@ -271,7 +271,7 @@ ui <- navbarPage(title = paste("MPD version: ", MPD_version_num, "-",MPD_version
     class = "dropdown",
     a(
       icon('bug', "fa-2x"),
-      href = 'https://github.com/Biodiversity-Research-Institute/MMP-tool/issues',
+      href = 'https://github.com/Biodiversity-Research-Institute/MPD-tool/issues',
       #exclamation-circle
       style = "margin-top: -33px; padding-bottom: 0px; margin-left: -15px; padding-right: 4px",
       target = '_blank',
