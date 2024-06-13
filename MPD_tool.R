@@ -20,6 +20,7 @@
 # l
 # created: 16 Feb 2022
 # Modified 06 April 2022
+# 13 Jun 24 - fixed where all references not being downloaded.
 
 
 library(shiny)
@@ -35,7 +36,7 @@ library(DT)
 library(stringr)
 
 unique_no_na <- function(x) unique(x[!is.na(x)])
-MPD_version_num = "0.14"
+MPD_version_num = "0.14.1"
 MPD_version_name = "Primary Artemis"
 MPD_db_date = "30 November 2023"
 
@@ -475,21 +476,22 @@ server <- function(input, output, session) {
                                                               exportOptions = list(
                                                                 modifier = list(page = "all"),
                                                                 orthogonal = "export"))),
-
-                                             columnDefs = list(
-                                               list(
-                                                 width = "14em",
-                                                 targets = 0:1,
-                                                 render = JS("$.fn.dataTable.render.ellipsis(20)")
-                                               ),
-                                               list(
-                                                 width = "14em",
-                                                 targets = 2,
-                                                 render = JS("$.fn.dataTable.render.ellipsis(60)")
-                                               )
-                                               
-                                               ))
-                              ))
+                                          
+                                          columnDefs = list(
+                                            list(
+                                              width = "14em",
+                                              targets = 0:1,
+                                              render = JS("$.fn.dataTable.render.ellipsis(20)")
+                                            ),
+                                            list(
+                                              width = "14em",
+                                              targets = 2,
+                                              render = JS("$.fn.dataTable.render.ellipsis(60)")
+                                            )
+                                            
+                                          ))
+  ), server = F 
+  )
 
 
   selection_tree_multilevel <- function(tree_selection) {
