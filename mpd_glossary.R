@@ -41,6 +41,13 @@ stressor_defs <-
     
     paste(
       p(
+        strong("Habitat Alteration."),
+        "Habitat alteration primarily involves introducing hard structures into previously soft sediment environments. This modification can initially involve seabed disturbance and subsequent changes to the benthic community."
+      )
+    ),
+    
+    paste(
+      p(
         strong("Heat."),
         "Heat is an increase in water or air temperature above typical levels."
       )

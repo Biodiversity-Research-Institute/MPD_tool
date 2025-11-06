@@ -20,8 +20,9 @@
 # l
 # created: 16 Feb 2022
 # Modified 06 April 2022
-# 13 Jun 24 - fixed where all references not being downloaded.
-
+# 0.15.1 - Quaternary Artemis - 13 Jun 24 - fixed where all references not being downloaded.
+# 0.16.0 - 20 Mar 25 - Rapturous Artemis - updated the database with new bird and bat entries through 2023
+# 0.17.0 - 06 Nov 25 - Supple Artemis - updated the database with all other resource groups through 2024
 
 library(shiny)
 library(shinyBS)
@@ -36,9 +37,9 @@ library(DT)
 library(stringr)
 
 unique_no_na <- function(x) unique(x[!is.na(x)])
-MPD_version_num = "0.14.1"
-MPD_version_name = "Primary Artemis"
-MPD_db_date = "30 November 2023"
+MPD_version_num = "0.17.0"
+MPD_version_name = "Supple Artemis"
+MPD_db_date = "06 November 2025" #"20 March 2025"#"30 November 2023"
 
 options(shiny.trace = F)
 
@@ -74,15 +75,20 @@ ui <- navbarPage(title = paste("MPD version: ", MPD_version_num, "-",MPD_version
                                   "development phase, and implementation status (e.g., whether the mitigation measure has been ",
                                   "tested or shown to be effective). This Tool does not prioritize or assess the value of individual or ",
                                   "combined mitigation practices, and it does not consider site- and project-specific conditions that ",
-                                  "might affect how and whether certain mitigation practices may be practicably implemented.")),
+                                  "might affect how and whether certain mitigation practices may be practicably implemented.",
+                                  "<br>",
+                                  "<br>",
+                                  "The mitigation approaches included in the database reference literature through 2023",
+                                  "for birds and bats and 2024 for other resource groups."
+                                 )),
                     style = "padding-top:20px; padding-left: 20px; padding-right: 60px; margin-top: 10px; margin-bottom: 10px; color: black; white-space: normal; font-size: 16px;"),
                    h3("Resources", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
                    a("User Manual", 
-                     href = 'MPD Updated user manual 2023_final.pdf',
+                     href = 'MPD Tool User Manual_November 2025.pdf',
                      style = "padding-left: 30px; padding-right: 50px; font-weight: 600; font-size: 18px;", 
                      target="_blank"),
                    a("Full Database Download", 
-                     href = "Full-MMP-and-Reference-List-10-13-2023.zip",
+                     href = "Full-MMP-and-Reference-List-11-06-2025.zip", #"Full-MMP-and-Reference-List-03-20-2025.zip", #"Full-MMP-and-Reference-List-02-28-2025.zip",
                      style = "padding-left: 0px; padding-right: 20px; font-weight: 600; font-size: 18px;"),
                                         
                     h3("Instructions", style = "padding-left: 10px; margin-bottom: 10px; color: CornflowerBlue;"),
@@ -231,7 +237,9 @@ ui <- navbarPage(title = paste("MPD version: ", MPD_version_num, "-",MPD_version
            ),
            fluidRow(
              hr(),
-             p(paste("Date database last updated:", MPD_db_date), style = "margin-left: 20px;")
+             p(paste("*The mitigation approaches included in the database reference literature through 2023",
+                     "for birds and bats and 2024 for other resource groups."), style = "font-size: 12px; margin-left: 20px;"),
+             em(paste("Date tool last updated: ", MPD_db_date), style = "margin-left: 20px;")
              )
            ),
 
@@ -241,7 +249,9 @@ ui <- navbarPage(title = paste("MPD version: ", MPD_version_num, "-",MPD_version
               DT::dataTableOutput("refs"))),
            fluidRow(
              hr(),
-             p(paste("Date database last updated:", MPD_db_date), style = "margin-left: 20px;")
+             p(paste("*The mitigation approaches included in the database reference literature for birds and bats through 2023",
+                                  "and for other resource groups through 2024."), style = "font-size: 12px; margin-left: 20px;"),
+             em(paste("Date tool last updated: ", MPD_db_date), style = "margin-left: 20px;")
            )
            ),
 
@@ -368,10 +378,13 @@ server <- function(input, output, session) {
   # c(cat(paste0('"',names(mmp_data), '"'), sep = ", ")
   mmp_field_order <- c("MMPID", "Mitigation Approach", "Description", "GeneralizedMMP", "Resources", "SubGroup", 
                        "Stressors", "PotentialEffects", "DevelopmentPhases", "Industry", "MitigationHierarchy", 
-                       "ImplementationStatus", "ImplementationDetails", "SpeciesNotes", "Citations", "Notes")
+                       "ImplementationStatus", "ImplementationDetails", "SpeciesNotes", "Citations") #, "Notes")
 
   # Read in Excel file
-  MMP_DB_file = "Full-MMP-and-Reference-List-10-13-2023.xlsx"
+  # MMP_DB_file = "Full-MMP-and-Reference-List-10-13-2023.xlsx"
+  #MMP_DB_file = "Full-MMP-and-Reference-List-03-20-2025.xlsx"
+  MMP_DB_file = "Full-MMP-and-Reference-List-11-06-2025.xlsx"
+  
   
   # write out "Electromagnetic Fields (EMF)" instead of just "EMF" under stressors
   mmp_data <- read_excel(MMP_DB_file, sheet = "MMP Data") %>% 
@@ -379,6 +392,7 @@ server <- function(input, output, session) {
     # dplyr::mutate(across('Stressors', ~ str_replace(.x, 'EMF', 'Electromagnetic Fields (EMF)'))) %>% 
     dplyr::select(all_of(mmp_field_order))
   
+  # browser()
   #remove NULLS, convert "NA" to NA
   mmp_data[mmp_data=="NULL"] <- NA
   mmp_data[mmp_data=="NA"] <- NA
@@ -387,7 +401,7 @@ server <- function(input, output, session) {
     filter(GeneralizedMMP == "pistachio gelato")
   
   # Render data table
-  output$data_table <- DT::renderDT(datatable(filtered_data()[,2:16],
+  output$data_table <- DT::renderDT(datatable(filtered_data()[,2:15],
                                               selection = 'none', 
                                               rownames = F, 
                                               class = "display nowrap",
@@ -396,7 +410,7 @@ server <- function(input, output, session) {
                                               #add a download button to the table. https://rstudio.github.io/DT/extensions.html
                                               colnames = c("Mitigation Approach", "Description", "Mitigation Type", "Resource", "Resource Sub-group", "Stressors", "Potential Effects",
                                                 "Development Phases", "Industry", "Mitigation Hierarchy", "Implementation Status", "Implementation Details",
-                                                "Species Notes", "Citations", "Notes"),
+                                                "Species Notes", "Citations"), #, "Notes"),
                                               options = list(
                                                 # fixedHeader = TRUE,
                                                 fixedColumns = list(leftColumns = 1),
@@ -437,7 +451,7 @@ server <- function(input, output, session) {
                                                   #   ),
                                                   list(
                                                     width = "22em",
-                                                    targets = 1:14,
+                                                    targets = 1:13,
                                                     render = JS("$.fn.dataTable.render.ellipsis(20)")
                                                     ))
                                                 # Whether the buttons export all data or only visible data is determined by the server argument
@@ -452,7 +466,7 @@ server <- function(input, output, session) {
   mmp_ref_data <- read_excel(MMP_DB_file, sheet = "cross-check")
   
   #render filtered refs
-  output$refs <- DT::renderDT(datatable(filtered_refs()[,c(2:4)],
+  output$refs <- DT::renderDT(datatable(filtered_refs()[,c(2:4)] %>% distinct(),
                                         selection = 'none', 
                                         rownames = F, 
                                         class = "display nowrap",
@@ -547,10 +561,11 @@ server <- function(input, output, session) {
 
   })
   
-  #filter references too based on mmp data
+  #filter references too based on mmp data, de-duplicate to not be redundant
   filtered_refs <- eventReactive(filtered_data(), {
     mmp_ref_data %>%
-      filter(MMPID %in% filtered_data()$MMPID)
+      filter(MMPID %in% filtered_data()$MMPID) %>% 
+      distinct()
   })
 
   

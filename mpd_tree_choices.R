@@ -14,6 +14,7 @@ general_mmps_choices <- list(
     'Structure Configuration' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Turbine Operation Parameters' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Vessel Operation Parameters' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
+    'Visibility and Detectability Enhancement' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Water Quality Management' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F)), 
   sttype="default",stopened=F,sticon="glyphicon glyphicon-plus"))
 
@@ -45,6 +46,7 @@ subgroup_choices <- list(
       sttype="default",stopened=F,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Fisheries' = structure(list(
       'Commercial Fisheries'= structure("",sttype="default",sticon="glyphicon glyphicon-record"),
+      'Essential Fish Habitat'= structure("",sttype="default",sticon="glyphicon glyphicon-record"),
       'Recreational Fisheries' = structure("",sttype="default",sticon="glyphicon glyphicon-record")),
       sttype="default",stopened=F,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Marine Mammals' = structure(list(
@@ -63,6 +65,7 @@ stressors_choices <- list(
     'Changes in Vessel Traffic' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Effects to Fishery Target Species' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'EMF' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
+    'Habitat Alteration' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Heat' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Impaired Safe Fishery Access' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
     'Inadequate Infrastructure' = structure(list(), sttype="default",stopened=FALSE,sticon="glyphicon glyphicon-plus", stdisabled=F),
