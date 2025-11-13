@@ -1,11 +1,152 @@
 #Glossary values for tool
 
-stressor_preamb <- paste(h4("Stressors"),
+####resource subgroup####
+
+resource_preamb <- 
+  paste(
+    h4("Resource Sub-group"),
+    p(em("Mitigation practices are focused on minimizing and avoiding potential impacts of offshore wind development on Birds and Bats, Marine Mammals and Sea Turtles, Fish, Benthos, and Fisheries. Some groups have subgroups nested within.")
+      )
+  )
+
+
+resource_defs <- 
+ 
+   #benthos#
+
+  paste(
+    hr(),
+    h4("Benthos"),
+    paste(
+      p(
+        strong("Demersal/Groundfish."),
+        "Fish are organisms in the taxonomic groups of teleosts (bony fish such as sturgeon), elasmobranchs (cartilaginous fish such as sharks), and agnaths (jawless fish such as lamprey). Demersal and groundfish are fish that live and feed mainly on or near the seafloor."
+        )
+    ),
+    
+
+    paste(
+      p(
+        strong("Benthic Invertebrates"),
+        "Benthic invertebrates are organisms without backbones (e.g., crabs, lobsters, and sea slugs) that live mainly on the seafloor as adults."
+        )
+    ),
+    
+    paste(
+      p(
+        strong("Seagrass/Kelp/Algae"),
+        "Seagrass are flowering plants that grow entirely underwater, though they may be exposed to air at different tidal stages. Kelp are large, brown algal underwater seaweeds of the order Laminariales. Algae are non- flowering plants that grow entirely underwater, though they may be exposed to air at different tidal stages."
+        )
+    ),
+    
+    
+    # paste(),
+    
+    paste(
+      h4("Birds and Bats"),
+      p(
+        strong("Marine Birds."),
+        "Marine birds are defined for this purpose as waterbirds that are expected to interact with marine environments on the Outer Continental Shelf on a regular basis. This includes auks, gannets, cormorants, gulls, skuas, jaegers, loons, grebes, sea ducks, shearwaters, petrels, storm-petrels, terns, and phalaropes (which are shorebirds but occur pelagically)."
+      )
+    ),
+    
+    paste(
+      p(
+        strong("Nocturnal Aerial Migrants."),
+        "Bats and many species of birds migrate at night, including over the water. This group can include passerines, shorebirds, some waterfowl, some raptors, and other bird species, as well as bats."
+      )
+    ),
+    
+    
+    # paste(),
+    
+    paste(
+      h4("Fish"),
+      p(
+        strong("Pelgaic Fish."),
+        "Pelagic fish are fish that live and feed mainly in the water column."
+      )
+    ),
+    
+    paste(
+      p(
+        strong("Demersal Groundfish."),
+        "Demersal and groundfish are fish that live and feed mainly on or close to the seafloor."
+      )
+    ),
+    
+    # paste(),
+    
+    paste(
+      h4("Fisheries"),
+      p(
+        strong("Commercial Fisheries."),
+        "Commercial fisheries are fisheries conducted with the goal of selling the catch for profit."
+      )
+    ),
+    
+    paste(
+      p(
+        strong("Essential Fish Habitat."),
+        "Essential Fish Habitat are waters and substrate which are necessary to fish for spawning, breeding, feeding, or growth to maturity."
+      )
+    ),
+    
+     paste(
+      p(
+        strong("Recreational Fisheries."),
+        "Recreational fisheries are fisheries conducted for sport or pleasure (including charter and for-hire fishing)."
+      )
+    ),
+    
+    
+    # paste(),
+    
+    paste(
+      h4("Marine Mammals"),
+      p(
+        strong("Low-Frequency Cetaceans."),
+        "Low-frequency cetaceans are more sensitive to lower frequency sound. Their generalized hearing range is from 7 hertz (Hz) to 35 kilohertz (kHz). Low-frequency cetaceans include all mysticetes (baleen whales)."
+        )
+    ),
+    
+    paste(
+      p(
+        strong("Mid-Frequency Cetaceans."),
+        "Mid-frequency cetaceans are more sensitive to mid- frequency sound. Their generalized hearing range is from 150 Hz to 160 kHz.Mid-frequency cetaceans include most delphinid species (dolphins), beaked whales, and sperm whales (but not pygmy and dwarf sperm whales)."
+      )
+    ),
+    
+    paste(
+      p(
+        strong("High-Frequency Cetaceans."),
+        "High-frequency cetaceans are more sensitive to high-frequency sound. Their generalized hearing range is from 275 Hz to 160 kHz. High-frequency cetaceans include porpoises, river dolphins, pygmy/dwarf sperm whales, Cephalorhynchus species, and some Lagenorhynchus species."
+        )
+    ),
+    
+    paste(
+      p(
+        strong("Pinnipeds."),
+        "Phocid pinnipeds include all earless seals or “true seals,” such as harbor or common seals and gray seals. Otariid pinnipeds include all eared seals (fur seals and sea lions) and walruses."
+      )
+    ),
+    
+    paste(
+      p(
+        strong("North Atlantic Right Whale."),
+        "The North Atlantic right whale (Eubalaena glacialis) is listed as endangered under the Endangered Species Act. This sub- taxon was applied in the case that an MMP applied only to North Atlantic right whales and not to other marine mammals (i.e., regulations and guidelines specifically for North Atlantic right whales)."      )
+    )
+  )
+
+
+####stressors####
+stressor_preamb <- 
   
-  p(em("Stressors are external stimuli that can cause changes to the behavioral, physical, chemical, and/or biological characteristics of an organism, species, or the ecosystem inhabited by the organism/species. In the case of fisheries, stressors are unintended consequences of offshore wind energy development activities that potentially affect fishing and fisheries. While stressors can occur in the natural environment or from human activities, in this case the New York State Energy Research and Development Authority (NYSERDA) is focusing on anthropogenic stressors associated with offshore wind energy development on the Outer Continental Shelf (not in state waters or the cable interconnect to land).")),
-  
-  p(em("NYSERDA has endeavored to include all stressors that could occur within federal offshore wind lease areas. Section 1.1.1 defines stressors that affect birds and bats, marine mammals and sea turtles, fish, fisheries and/or benthos while Section
-1.1.2 includes stressors specific to fisheries.")))
+  paste(
+    h4("Stressors"),
+    p(em("Stressors are external stimuli that can cause changes to the behavioral, physical, chemical, and/or biological characteristics of an organism, species, or the ecosystem inhabited by the organism/species. In the case of fisheries, stressors are unintended consequences of offshore wind energy development activities that potentially affect fishing and fisheries. While stressors can occur in the natural environment or from human activities, in this case the New York State Energy Research and Development Authority (NYSERDA) is focusing on anthropogenic stressors associated with offshore wind energy development on the Outer Continental Shelf (not in state waters or the cable interconnect to land).")
+      )
+  )
 
 
 stressor_defs <- 
@@ -123,6 +264,7 @@ stressor_defs <-
     )
   )
 
+####potential effects####
 pot_effects_preamb <- paste(h4("Potential effects"),
                             
     p(em("Potential effectsare the changes to the behavioral, physical, chemical, and/or bio- logical characteristics of an organism, species, or the ecosystem inhabited by the organism/species due to stressors related to offshore wind energy development. In the context of fisheries, potential effects are impacts on fishing activities and revenue as a result of stressors related to offshore wind energy development. Addi- tionally, changes in fishing effort, grounds, and revenue can result from changing markets, ocean conditions, permit and licensing requirements, protected species interactions, natural fish abundance and distribution patterns, and other factors un- related to offshore wind energy development. For purposes of describing potential mitigation practices to address effects of stressors on fisheries, effects are considered outcomes that are a result of offshore wind energy development and not other biological, physical, and economic factors that affect fisheries.
@@ -133,6 +275,7 @@ pot_effects_defs <-
   
   paste(
     paste(
+      hr(),
       p(
         strong("Behavioral Disturbance."),
         "Behavioral disturbance is a change in individual or group short-term natural behavior (e.g., movement patterns, alertness) or behavior patterns (e.g., change from spawning, feeding behavior, social behavior) as a result of exposure to a stressor(s), not including changes that would constitute displacement/barrier effects and attraction (listed separately below)."
@@ -190,7 +333,7 @@ Loss of revenue can result from loss of gear, damaged gear, reduced catch, addit
       )
     )
   )
-
+####development phase####
 dev_phase_preamb <- 
   
   paste(h4("Development phase"),
@@ -199,11 +342,13 @@ dev_phase_preamb <-
 
 dev_phase_defs <- 
   
-  paste(paste(
-    p(
-      strong("Pre-construction."),
-      "This phase includes site assessment work such as geotechnical and geophysical surveys, installation of meteorological towers or buoys, and environmental or other surveys."
-    )
+  paste(
+    hr(),
+    paste(
+      p(
+        strong("Pre-construction."),
+        "This phase includes site assessment work such as geotechnical and geophysical surveys, installation of meteorological towers or buoys, and environmental or other surveys."
+      )
   ),
   
   paste(
@@ -226,18 +371,20 @@ dev_phase_defs <-
       "This phase includes decommissioning activities chosen for a given project site, which may include full removal of structures, removal of above-water structures (to a certain water depth to avoid navigational hazards), or repowering."
     )
   ))
-
+####industry####
 industry_preamb <- paste(h4("Industry Origin"),
         
   p(em("Industry terms define the type of industry for which mitigation practices have been suggested or implemented in the U.S. or other countries.")))
 
 industry_defs <-
   
-  paste(paste(
-    p(
-      strong("Offshore Wind."),
-      "Offshore wind refers to any offshore wind energy development in marine or freshwater (e.g., Great Lakes) locations."
-    )
+  paste(
+    hr(),
+    paste(
+      p(
+        strong("Offshore Wind."),
+        "Offshore wind refers to any offshore wind energy development in marine or freshwater (e.g., Great Lakes) locations."
+      )
   ),
   
   paste(
@@ -267,14 +414,16 @@ industry_defs <-
       "Generic/general includes any industry that is not included in the above options, or situations where an industry was not specified."
     )
   ))
-
+####implementation status####
 implement_status_preamb <- paste(h4("Implementation status"),
         
   p(em("The implementation status defines the degree to which the use or efficacy of a mitigation practice has been tested.")))
 
 implement_status_defs <-
   
-  paste(paste(
+  paste(
+    hr(),
+    paste(
     p(
       strong("Not Implemented."),
       "Not implemented means that the activity was not implemented in the source literature."
@@ -308,17 +457,19 @@ implement_status_defs <-
       "Unknown means that, based on source literature, it is unclear whether or not the activity described was implemented."
     )
   ))
-
+####mitigation hierarchy####
 mit_heir_preamb <- paste(h4("Mitigation hierarchy"),
         
         p(em("The most applicable level(s) of the mitigation hierarchy was(were) chosen for each mitigation practice. For mitigation practices that were solely monitoring recommendations, no mitigation hierarchy levels were chosen.")))
 
 mit_heir_defs <-
   
-  paste(paste(
-    p(
-      strong("Avoidance."),
-      "Avoidance aims to eliminate impacts entirely by limiting potential exposure. For example, siting a project outside the range of an animal aims to completely avoid impacts on that animal. As another example, operating equipment outside the hearing range of an animal avoids sound impacts on that animal."    )
+  paste(
+    hr(),
+    paste(
+      p(
+        strong("Avoidance."),
+        "Avoidance aims to eliminate impacts entirely by limiting potential exposure. For example, siting a project outside the range of an animal aims to completely avoid impacts on that animal. As another example, operating equipment outside the hearing range of an animal avoids sound impacts on that animal."    )
   ),
   
   paste(
@@ -340,13 +491,14 @@ mit_heir_defs <-
       "Offset is compensation for impacts. For example, monetary compensation could be provided for loss of fishery access. As another example, improvement of off-site habitat or establishment of a marine protected area in another place could offset degradation of habitat in the project area. (Restoration defined above requires restoration of areas directly impacted by the project; other rehabilitation or preservation efforts are offsets typically described as compensatory mitigation.)"
       )
   ))
-
+####mitigation type####
 gen_mitpractices_preamb <- paste(h4("Mitigation Type"),
         
         p(em("Categories or types of mitigation practices identified during literature review.")))
 
 gen_mitpractices_defs <-
   paste(
+    hr(),
     paste(
       p(
         strong("Barriers."),

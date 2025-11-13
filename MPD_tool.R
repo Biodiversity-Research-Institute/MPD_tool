@@ -23,6 +23,7 @@
 # 0.15.1 - Quaternary Artemis - 13 Jun 24 - fixed where all references not being downloaded.
 # 0.16.0 - 20 Mar 25 - Rapturous Artemis - updated the database with new bird and bat entries through 2023
 # 0.17.0 - 06 Nov 25 - Supple Artemis - updated the database with all other resource groups through 2024
+# 0.17.1 - 13 Nov 25 - added some glossary definitions
 
 library(shiny)
 library(shinyBS)
@@ -37,7 +38,7 @@ library(DT)
 library(stringr)
 
 unique_no_na <- function(x) unique(x[!is.na(x)])
-MPD_version_num = "0.17.0"
+MPD_version_num = "0.17.1"
 MPD_version_name = "Supple Artemis"
 MPD_db_date = "06 November 2025" #"20 March 2025"#"30 November 2023"
 
@@ -257,7 +258,7 @@ ui <- navbarPage(title = paste("MPD version: ", MPD_version_num, "-",MPD_version
 
   tabPanel("Glossary",
            # Glossary for display
-           selectInput(inputId = "glossary_grp", "Group:", choices = c("Stressors", "Potential Effects", "Development Phases",
+           selectInput(inputId = "glossary_grp", "Group:", choices = c("Resource Sub-group", "Stressors", "Potential Effects", "Development Phases",
                                                                       "Industry Origin", "Implementation Status",
                                                                       "Mitigation Hierarchy", "Mitigation Type")),
            htmlOutput("grp_def"),
@@ -348,6 +349,7 @@ server <- function(input, output, session) {
   output$grp_def <- eventReactive(input$glossary_grp, {
     grp <- input$glossary_grp
     preamb_out <- case_when(
+      grp == "Resource Sub-group" ~ resource_preamb,
       grp == "Stressors" ~ stressor_preamb,
       grp == "Potential Effects" ~ pot_effects_preamb,
       grp == "Development Phases" ~ dev_phase_preamb,
@@ -363,6 +365,7 @@ server <- function(input, output, session) {
   output$glossary <- eventReactive(input$glossary_grp,{
     grp <- input$glossary_grp
     def_out <- case_when(
+      grp == "Resource Sub-group" ~ resource_defs,
       grp == "Stressors" ~ stressor_defs,
       grp == "Potential Effects" ~ pot_effects_defs,
       grp == "Development Phases" ~ dev_phase_defs,
@@ -441,7 +444,7 @@ server <- function(input, output, session) {
                                                   "}"),
                                                 columnDefs = list(
                                                   list(
-                                                    width = "120em",
+                                                    width = "122em",
                                                     targets = 0
                                                     # render = JS("$.fn.dataTable.render.ellipsis(40)")
                                                   ),
